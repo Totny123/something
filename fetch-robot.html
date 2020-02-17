@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>聊天机器人</title>
+</head>
+<body style="text-align: center;">
+    <textarea name="" id="message" cols="100" rows="10"></textarea><br />
+    <textarea name="" id="send" cols="100" rows="10" ></textarea><br />
+    <button onclick="send()" style="width: 25%;padding: 30px;font-size: 30px;">发送</button>
+    <script>
+        var times=0;
+        var show=document.getElementById("message");
+        function send(){
+            var send=document.getElementById("send").value;
+            document.getElementById("send").value="";
+            document.getElementById("send").focus();
+            focus(send);
+            fetch('http://wang.norma.shop:8080/api.php?key=free&appid=0&msg='+send)
+                .then(response=>{
+                    return response.json();
+                })
+                .then(shuju=>{
+                    times++;
+                    console.log(shuju.content);
+                    show.innerHTML=show.innerHTML+times+':'+shuju.content+'\n';
+                })
+                .catch(error=>{
+                    console.log(error);
+                })
+        }
+    </script>
+</body>
+</html>
